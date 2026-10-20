@@ -1,69 +1,62 @@
-<!doctype html><html lang="bg"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Жизнен клуб 2026 · Роботика</title><style>
-*{box-sizing:border-box}body{font-family:system-ui,Arial,sans-serif;background:#f3f6fb;color:#1c2c42;margin:0}.wrap{max-width:790px;margin:25px auto;padding:0 14px 50px}.hero{background:#17458f;color:#fff;border-radius:18px;padding:26px}.hero small{color:#f7a81b;font-weight:800;letter-spacing:.07em}.hero h1{margin:9px 0;font-size:29px}.hero p{margin:0;opacity:.9}.card{background:white;border-radius:15px;padding:23px;margin-top:15px;box-shadow:0 2px 12px #20385d12}h2{font-size:19px;margin:0 0 10px}.hint{font-size:14px;color:#607086;line-height:1.5}.group{background:#f5f8fc;border-radius:11px;padding:13px;margin:13px 0}.group strong{display:block;margin-bottom:8px}.choice{display:block;padding:9px 6px;line-height:1.4}input[type=checkbox],input[type=radio]{accent-color:#17458f;margin-right:9px}textarea{width:100%;border:1px solid #cad6e4;border-radius:9px;padding:11px;font:inherit;min-height:74px;resize:vertical}.q{display:block;margin:16px 0 7px;font-weight:650}.must{border-left:5px solid #f7a81b;background:#fff8e8;padding:13px 16px;border-radius:8px;margin:14px 0}button{background:#17458f;color:white;border:0;border-radius:10px;padding:13px 17px;font-weight:700;cursor:pointer;font-size:15px}button.alt{background:#eaf0fa;color:#17458f}button:disabled{opacity:.45;cursor:not-allowed}.actions{display:flex;gap:10px;flex-wrap:wrap}#result{display:none}#prompt{min-height:420px;font-size:14px;line-height:1.5}.error{color:#ad4c14}.ok{color:#197548}.count{font-size:14px;color:#17458f;font-weight:700}a{text-decoration:none}footer{text-align:center;color:#6b7789;font-size:12px;margin-top:22px}@media(max-width:520px){.hero h1{font-size:24px}.card{padding:17px}}</style></head><body><main class="wrap">
-<header class="hero"><small>ЖИЗНЕН КЛУБ 2026 · ПУБЛИЧЕН ИМИДЖ</small><h1>Роботика в моето училище</h1><p>Работен тест: от факти и петте „Защо?“ до готов промпт</p></header>
-<section class="card"><h2>1. Кои факти да изведем на преден план?</h2><p class="hint">Всички проверени факти остават достъпни за AI. Отбележете един или повече, които според вас заслужават акцент в публикацията.</p>
-<div class="group"><strong>👥 Участници</strong><label class="choice"><input type="checkbox" class="lead" value="0">42 ученици от VIII–XI клас участват в проекта</label></div>
-<div class="group"><strong>🤖 Оборудване</strong><label class="choice"><input type="checkbox" class="lead" value="1">10 комплекта за роботика, 3D принтер и 4 лаптопа</label></div>
-<div class="group"><strong>🏆 Резултати</strong><label class="choice"><input type="checkbox" class="lead" value="2">Спечелени призови места в национално състезание</label></div>
-<div class="group"><strong>🤝 Финансиране и партньори</strong><label class="choice"><input type="checkbox" class="lead" value="3">Ротари клуб, Ротаракт клуб и партньорска организация</label><label class="choice"><input type="checkbox" class="lead" value="4">Обща стойност на проекта: 7800 евро</label></div>
-<div class="must"><strong>🔒 Задължителна информация, която не се избира:</strong><p style="margin:7px 0 0">Проектът е съфинансиран с дистриктен грант от Фондация Ротари. Тази информация автоматично влиза в промпта и е задължителна за публикацията.</p></div><p class="count" id="counter">Избрани водещи факти: 0</p></section>
-<section class="card"><h2>2. Кой човешки момент да използваме?</h2><p class="hint">Изберете само нещо, за което имаме фактическа основа.</p><label class="choice"><input type="radio" name="moment" value="Участието на учениците в националното състезание; няма потвърдени индивидуални истории или цитати" checked>Участието на учениците в националното състезание</label><label class="choice"><input type="radio" name="moment" value="Няма достатъчно данни за конкретна човешка история">Нямаме потвърдена конкретна история</label><label class="q" for="detail">Допълнителен конкретен момент (по желание)</label><textarea id="detail" placeholder="Само ако разполагате с проверена информация."></textarea><p class="hint">Въведеният допълнителен момент ще бъде отбелязан в промпта като предоставен от участниците, но непроверен от приложението.</p></section>
-<section class="card"><h2>3. Петте „Защо?“</h2><p class="hint">Напишете собствените си изводи. Те ще насочват разказа, но няма да бъдат третирани като доказани факти.</p><div id="whys"></div></section>
-<section class="card"><h2>4. Изберете комуникационен акцент</h2><label class="choice"><input type="radio" name="focus" value="Възможностите за практическо обучение на учениците" checked>Възможностите за учениците</label><label class="choice"><input type="radio" name="focus" value="Резултатите от националното състезание">Резултатите от състезанието</label><label class="choice"><input type="radio" name="focus" value="Партньорството в подкрепа на образованието">Партньорството в образованието</label></section>
-<section class="card"><h2>5. Създайте промпта</h2><p class="hint">Той ще съдържа всички факти, вашите избори, петте отговора и задължителното споменаване на гранта.</p><div class="actions"><button id="generate" disabled>Генерирай промпт</button><button class="alt" id="clear">Изчисти формуляра</button></div><p id="validation" class="error"></p></section>
-<section class="card" id="result"><h2>Готов промпт</h2><p class="hint">Копирайте текста и го поставете в ChatGPT, Gemini, Copilot или друг AI. Можете да редактирате текста преди копиране.</p><textarea id="prompt"></textarea><div class="actions" style="margin-top:12px"><button id="copy">Копирай промпта</button><a href="https://chatgpt.com/" target="_blank" rel="noopener"><button class="alt">Отвори ChatGPT ↗</button></a><a href="https://gemini.google.com/" target="_blank" rel="noopener"><button class="alt">Отвори Gemini ↗</button></a></div><p id="status" class="ok" aria-live="polite"></p></section>
-<footer>Прототип · Работи локално, без регистрация и без AI API · Отговорите не се изпращат на сървър</footer></main>
+<!doctype html>
+<html lang="bg">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>От проект към публикация | Публичен имидж</title>
+<style>
+:root{--navy:#123763;--blue:#1765a2;--ink:#203047;--muted:#627187;--line:#dbe4ee;--bg:#f4f7fb;--white:#fff;--focus:#e9f3ff;--green:#18724a}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Arial,sans-serif}header{background:var(--navy);color:#fff;padding:30px max(20px,calc((100vw - 940px)/2))}header h1{margin:0;font-size:clamp(24px,4vw,34px)}header p{margin:8px 0 0;color:#dce9fa}main{max-width:940px;margin:24px auto 60px;padding:0 16px}.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:clamp(18px,3vw,30px);box-shadow:0 6px 22px #1739610b;margin-bottom:18px}.intro{color:var(--muted);margin:0 0 18px}.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-bottom:20px}.step{font-size:12px;text-align:center;padding:9px 3px;background:#e5eaf1;border-radius:8px;color:#526276}.step.active{background:var(--navy);color:white;font-weight:700}.step.done{background:#d9efe5;color:#185d40}.tag{color:var(--blue);font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.08em}h2{margin:5px 0 8px;font-size:25px}h3{margin:20px 0 7px;font-size:17px}label{display:block;font-weight:650;margin:16px 0 6px}textarea,input[type=text],select{display:block;width:100%;border:1px solid #bfcddd;border-radius:9px;padding:12px;font:inherit;color:var(--ink);background:white}textarea{min-height:85px;resize:vertical}textarea:focus,input:focus,select:focus{outline:3px solid #bcdcff;border-color:var(--blue)}.hint{font-size:13px;color:var(--muted);margin:5px 0}.check{display:flex;align-items:center;gap:10px;margin:18px 0;padding:14px;background:#f2f7fc;border:1px solid var(--line);border-radius:10px;font-weight:600}.check input{width:20px;height:20px;accent-color:var(--navy)}.buttons{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:24px}.right{margin-left:auto}button{cursor:pointer;border:0;border-radius:9px;padding:12px 17px;font:inherit;font-weight:700;background:var(--navy);color:white}button.secondary{background:#e7eef7;color:var(--navy)}button.outline{background:white;border:1px solid #c8d5e4;color:var(--navy)}button:disabled{opacity:.45;cursor:default}.notice{background:#eef6ff;border-left:4px solid var(--blue);padding:12px 14px;border-radius:7px;font-size:14px}.success{color:var(--green);font-weight:700;min-height:24px}.hidden{display:none!important}.result{white-space:pre-wrap;min-height:300px;max-height:460px;overflow:auto;font:14px/1.55 ui-monospace,Consolas,monospace;background:#f7f9fc}.footer{font-size:13px;color:var(--muted);text-align:center;margin-top:18px}.progress{height:5px;background:#e5eaf1;border-radius:10px;margin-bottom:17px;overflow:hidden}.progress span{display:block;height:100%;background:var(--blue);transition:width .2s}@media(max-width:520px){.step{font-size:10px;padding:8px 2px}.buttons button{flex:1}.panel{border-radius:12px}}@media print{header{background:white;color:black;padding:10px}main{margin:0}.buttons,.steps,.progress{display:none}.panel{box-shadow:none;border:0}}
+</style>
+</head>
+<body>
+<header><h1>От проект към публикация</h1><p>Практически инструмент за публичен имидж на ротариански проекти</p></header>
+<main>
+<section class="panel">
+<p class="intro">Попълвайте стъпките последователно. Приложението ще създаде готов промпт, който можете да копирате в ChatGPT или друг инструмент с изкуствен интелект. Публикацията се създава там, а не в този формуляр.</p>
+<div class="steps" id="steps" aria-label="Стъпки"></div><div class="progress"><span id="bar"></span></div>
+<form id="editor" novalidate>
+<section class="page" data-step="0"><span class="tag">Стъпка 1 от 5</span><h2>Проект и водещи факти</h2><p class="hint">Въведете само трите факта, които групата е избрала за водещи.</p>
+<label for="project">Име на проекта</label><input id="project" type="text" placeholder="Например: Роботика в моето училище">
+<label for="fact1">Водещ факт 1</label><textarea id="fact1" placeholder="Какво е постигнато?"></textarea>
+<label for="fact2">Водещ факт 2</label><textarea id="fact2"></textarea>
+<label for="fact3">Водещ факт 3</label><textarea id="fact3"></textarea>
+<label class="check"><input id="foundation" type="checkbox"> Проектът е финансиран от Фондация Ротари</label>
+<div id="grantBlock" class="hidden"><label for="grant">Вид на гранта</label><select id="grant"><option value="">Изберете вид</option><option value="дистриктен грант">Дистриктен грант</option><option value="глобален грант">Глобален грант</option><option value="друг вид подкрепа">Друг</option></select><div id="grantOtherBlock" class="hidden"><label for="grantOther">Уточнете вида на подкрепата</label><input id="grantOther" type="text" placeholder="Посочете проверената информация"></div></div>
+</section>
+<section class="page hidden" data-step="1"><span class="tag">Стъпка 2 от 5</span><h2>Петте „ЗАЩО?“</h2><p class="hint">Използвайте отговорите от работния лист. Не е необходимо да пишете дълго.</p>
+<label for="why1">1. Защо избраните факти са важни? Какво показват за постигнатото?</label><textarea id="why1"></textarea>
+<label for="why2">2. Защо постигнатото има значение за хората, към които е насочен проектът? Какво конкретно са получили или какво се е променило?</label><textarea id="why2"></textarea>
+<label for="why3">3. Защо тази промяна е важна за тях? Какви възможности дава или каква потребност удовлетворява?</label><textarea id="why3"></textarea>
+<label for="why4">4. Защо постигнатото има значение и за общността? Каква обществена полза можем да обосновем?</label><textarea id="why4"></textarea>
+<label for="why5">5. Защо хората извън Ротари биха се заинтересували? Какво искаме да разберат и запомнят?</label><textarea id="why5"></textarea>
+</section>
+<section class="page hidden" data-step="2"><span class="tag">Стъпка 3 от 5</span><h2>Послание и човешка история</h2>
+<label for="message">Основно послание</label><textarea id="message" placeholder="Какво е най-важното, което искате обществото да разбере?"></textarea>
+<label for="story">Проверен цитат или конкретна човешка история</label><textarea id="story" placeholder="Въведете точен цитат или опишете конкретна, проверена история."></textarea>
+<p class="hint">Ако няма проверена история или цитат, оставете полето празно. Изкуственият интелект няма да има право да измисля такъв.</p>
+</section>
+<section class="page hidden" data-step="3"><span class="tag">Стъпка 4 от 5</span><h2>Проверка и ограничения</h2>
+<label for="limits">Какво не бива да твърдим?</label><textarea id="limits" placeholder="Например: заявените намерения не са доказан резултат; няма данни за последваща реализация."></textarea>
+<div class="notice">Проверете дали фактите и цитатите са достоверни. Не въвеждайте лични данни или непублични сведения без основание за публикуването им.</div>
+</section>
+<section class="page hidden" data-step="4"><span class="tag">Стъпка 5 от 5</span><h2>Готов промпт</h2><p>Натиснете бутона, за да съставите промпта от въведените отговори. След това го копирайте в избрания AI инструмент.</p>
+<button type="button" id="generate">Генерирай промпт</button><label for="output">Промпт за копиране</label><textarea id="output" class="result" readonly placeholder="Тук ще се появи готовият промпт."></textarea>
+<div class="buttons"><button type="button" id="copy">Копирай промпта</button><button type="button" id="download" class="secondary">Запази като .txt</button></div><p class="success" id="status" role="status" aria-live="polite"></p>
+<div class="notice">Получената публикация трябва да бъде прегледана и редактирана от групата. Изкуственият интелект не проверява автоматично достоверността на въведените твърдения.</div>
+</section>
+<div class="buttons"><button type="button" class="secondary" id="prev">← Назад</button><button type="button" class="outline" id="reset">Нов проект</button><button type="button" id="next" class="right">Следваща стъпка →</button></div>
+</form></section>
+<p class="footer">Работи директно в браузъра. Данните се запазват само в този браузър на това устройство, а не на сървър.</p>
+</main>
 <script>
-const verified=["42 ученици от VIII–XI клас участват в проекта.","Закупени са 10 комплекта за роботика, 1 3D принтер и 4 лаптопа.","Спечелени са призови места в национално състезание.","Проектът е финансиран от Ротари и Ротаракт клуб, съфинансиран с дистриктен грант и с участие на партньорска организация.","Общата стойност на проекта е 7800 евро."];
-const leadFacts=["42 ученици от VIII–XI клас","10 комплекта за роботика, 3D принтер и 4 лаптопа","Призови места в национално състезание","Финансиране от Ротари и Ротаракт клуб с участие на партньорска организация","Обща стойност 7800 евро"];
-const questions=["Защо този проект е важен?","Защо това има значение за учениците?","Защо тази промяна е необходима?","Защо тя е важна за общността?","Защо хората извън Ротари трябва да се интересуват?"];
-const $=id=>document.getElementById(id);
-$("whys").innerHTML=questions.map((q,i)=>`<label class="q" for="why${i}">${i+1}. ${q}</label><textarea id="why${i}" placeholder="Вашият извод..."></textarea>`).join("");
-function selected(){return [...document.querySelectorAll(".lead:checked")].map(x=>+x.value)}
-function validate(){const n=selected().length;const done=questions.every((_,i)=>$("why"+i).value.trim());$("counter").textContent=`Избрани водещи факти: ${n}`;$("generate").disabled=n===0||!done;$("validation").textContent=n===0?"Изберете поне един водещ факт.":!done?"Попълнете всичките пет въпроса „Защо?“." :""}
-document.querySelectorAll("input,textarea").forEach(el=>el.addEventListener("input",validate));
-$("generate").onclick=()=>{
-const moment=document.querySelector('input[name="moment"]:checked').value,focus=document.querySelector('input[name="focus"]:checked').value,detail=$("detail").value.trim();
-$("prompt").value=`Ти си редактор по публични комуникации. Напиши публикация на български език за Facebook за проекта „Роботика в моето училище“.
-
-ВСИЧКИ ПРЕДОСТАВЕНИ ПРОВЕРЕНИ ФАКТИ:
-${verified.map((f,i)=>`${i+1}. ${f}`).join("\n")}
-
-ВОДЕЩИ ФАКТИ, ИЗБРАНИ ОТ УЧАСТНИЦИТЕ:
-${selected().map((i,n)=>`${n+1}. ${leadFacts[i]}`).join("\n")}
-
-ЗАДЪЛЖИТЕЛНО УПОМИНАВАНЕ:
-Проектът е съфинансиран с дистриктен грант от Фондация Ротари. Изрично включи това в самата Facebook публикация, независимо кои водещи факти са избрани. Не го заменяй с общо споменаване на Ротари.
-
-ЧОВЕШКИ МОМЕНТ:
-${moment}
-${detail?`Допълнителен детайл, въведен от участниците (не е независимо проверен): ${detail}`:"Няма допълнителен детайл."}
-
-ПЕТТЕ „ЗАЩО?“ – ИЗВОДИ НА УЧАСТНИЦИТЕ, А НЕ ДОКАЗАНИ ФАКТИ:
-${questions.map((q,i)=>`${i+1}. ${q}\n${$("why"+i).value.trim()}`).join("\n\n")}
-
-КОМУНИКАЦИОНЕН АКЦЕНТ:
-${focus}
-
-ЗАДАЧА:
-1. Предложи интересно, конкретно заглавие за хора извън Ротари.
-2. Напиши Facebook публикация до 80 думи (без заглавието), започваща с най-интересното за външната аудитория.
-3. Използвай водещите факти с приоритет, а останалите проверени факти само ако са полезни за текста.
-4. Задължително посочи в публикацията съфинансирането с дистриктен грант от Фондация Ротари.
-5. Петте „Защо?“ определят смисъла и гледната точка, но не доказват нови факти. Не превръщай цели, очаквания и интерпретации в постигнати резултати.
-6. Не измисляй цитати, индивидуални истории, имена, емоции, причинно-следствени връзки или резултати. Ако допълнителният човешки момент не е потвърден, не го представяй като факт.
-7. Избягвай кух патос, рекламни клишета и конструкциите „не само..., но и...“ и „не просто..., а...“.
-8. След текста направи кратка проверка на твърденията спрямо предоставените факти. Ако има недоказано твърдение, отбележи го и предложи корекция.
-9. Предложи кратко послание за последния куб, което участниците да обсъдят и одобрят.
-
-ОТГОВОРИ В ТОЗИ ФОРМАТ:
-ЗАГЛАВИЕ:
-FACEBOOK ПУБЛИКАЦИЯ (до 80 думи):
-ПРОВЕРКА НА ТВЪРДЕНИЯТА:
-ПРЕДЛОЖЕНИЕ ЗА ПОСЛАНИЕ НА КУБА:`;
-$("result").style.display="block";$("status").textContent="";$("result").scrollIntoView({behavior:"smooth",block:"start"});
-};
-$("copy").onclick=async()=>{try{await navigator.clipboard.writeText($("prompt").value);$("status").textContent="Промптът е копиран."}catch(e){$("prompt").focus();$("prompt").select();$("status").textContent="Текстът е маркиран. Натиснете Ctrl+C или използвайте „Копирай“ от менюто."}};
-$("clear").onclick=()=>{if(!confirm("Да изчистим всички отговори?"))return;document.querySelectorAll(".lead").forEach(x=>x.checked=false);questions.forEach((_,i)=>$("why"+i).value="");$("detail").value="";document.querySelector('input[name="moment"]').checked=true;document.querySelector('input[name="focus"]').checked=true;$("result").style.display="none";validate();window.scrollTo({top:0,behavior:"smooth"})};
-validate();
-</script></body></html>
+(()=>{'use strict';const ids=['project','fact1','fact2','fact3','foundation','grant','grantOther','why1','why2','why3','why4','why5','message','story','limits'];const el=id=>document.getElementById(id);const pages=[...document.querySelectorAll('.page')];let current=0;const storageKey='rotary-pi-prompt-v1';const val=id=>el(id).value.trim();
+function syncGrant(){el('grantBlock').classList.toggle('hidden',!el('foundation').checked);el('grantOtherBlock').classList.toggle('hidden',!el('foundation').checked||val('grant')!=='друг вид подкрепа')}
+function save(){try{let obj={};for(const id of ids)obj[id]=id==='foundation'?el(id).checked:el(id).value;localStorage.setItem(storageKey,JSON.stringify(obj))}catch(e){}syncGrant()}
+function load(){try{const obj=JSON.parse(localStorage.getItem(storageKey)||'{}');for(const id of ids)if(Object.prototype.hasOwnProperty.call(obj,id)){if(id==='foundation')el(id).checked=!!obj[id];else el(id).value=obj[id]}}catch(e){}syncGrant()}
+function view(n){current=Math.max(0,Math.min(4,n));pages.forEach((p,i)=>p.classList.toggle('hidden',i!==current));el('steps').innerHTML=['Факти','Защо?','История','Проверка','Промпт'].map((x,i)=>`<div class="step ${i===current?'active':i<current?'done':''}">${i+1}. ${x}</div>`).join('');el('bar').style.width=((current+1)*20)+'%';el('prev').disabled=current===0;el('next').classList.toggle('hidden',current===4);window.scrollTo({top:0,behavior:'instant'})}
+function generate(){const grant=el('foundation').checked;let grantText='Не е отбелязано финансиране от Фондация Ротари. Не твърди, че Фондацията е финансирала проекта.';if(grant){const g=val('grant')==='друг вид подкрепа'?val('grantOther'):val('grant');grantText=g?`Проектът е подкрепен от Фондация Ротари чрез ${g}. Посочи тази подкрепа коректно в публикацията.`:'Отбелязана е подкрепа от Фондация Ротари, но видът ѝ не е уточнен. Посочи само потвърдената подкрепа, без да измисляш вид грант.'}
+const x=(id)=>val(id)||'[Не е предоставена информация]';const out=`Ти си редактор по публични комуникации. Подготви Facebook публикация на български език за проект на Ротари клуб. Използвай само предоставената проверена информация.\n\n1. ИМЕ НА ПРОЕКТА\n${x('project')}\n\n2. ТРИ ВОДЕЩИ ФАКТА\nФакт 1: ${x('fact1')}\nФакт 2: ${x('fact2')}\nФакт 3: ${x('fact3')}\n\n3. ФИНАНСИРАНЕ ОТ ФОНДАЦИЯ РОТАРИ\n${grantText}\n\n4. ОТГОВОРИ НА ПЕТТЕ ВЪПРОСА „ЗАЩО?“\n1. Защо избраните факти са важни? ${x('why1')}\n2. Защо постигнатото има значение за хората, към които е насочен проектът? ${x('why2')}\n3. Защо тази промяна е важна за тях? ${x('why3')}\n4. Защо постигнатото има значение за общността? ${x('why4')}\n5. Защо хората извън Ротари биха се заинтересували? ${x('why5')}\n\n5. ОСНОВНО ПОСЛАНИЕ\n${x('message')}\n\n6. ПРОВЕРЕН ЦИТАТ ИЛИ КОНКРЕТНА ЧОВЕШКА ИСТОРИЯ\n${x('story')}\n\n7. КАКВО НЕ БИВА ДА ТВЪРДИМ\n${x('limits')}\n\nИЗИСКВАНИЯ КЪМ ПУБЛИКАЦИЯТА\n1. Напиши Facebook публикация до 100 думи, без заглавието.\n2. Започни с най-интересното за хора извън Ротари.\n3. Използвай трите водещи факта и основното послание.\n4. Използвай отговорите на „ЗАЩО?“, за да покажеш общественото значение, без механично да ги преразказваш.\n5. Включи човешката история или цитата само ако са предоставени и допринасят за текста. Не измисляй цитати и не променяй смисъла им.\n6. Спомени подкрепата на Фондация Ротари само когато е отбелязана и в рамките на потвърдените подробности.\n7. Не измисляй факти, имена, цитати, резултати или обстоятелства.\n8. Не представяй намерения, очаквания и възможни бъдещи ползи като постигнати резултати.\n9. Избягвай рекламни клишета, кух патос, общи фрази, излишни суперлативи и шаблонни конструкции.\n10. Използвай естествен, ясен и разбираем български език.\n11. Не превръщай публикацията в отчет за дейността на клуба.\n12. Завърши с конкретна мисъл, а не с рекламен лозунг.\n13. Предложи кратко и интересно заглавие, което точно отразява съдържанието.\n\nПредстави само заглавието и готовата публикация, без обяснения.`;el('output').value=out;el('status').textContent='Промптът е готов.'}
+async function copy(){if(!el('output').value)generate();const s=el('output').value;try{await navigator.clipboard.writeText(s);el('status').textContent='Промптът е копиран.'}catch(e){el('output').focus();el('output').select();el('status').textContent='Маркирахме текста. Използвайте „Копирай“ от менюто на устройството.'}}
+function download(){if(!el('output').value)generate();const blob=new Blob(['\ufeff'+el('output').value],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='rotary-prompt.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+for(const id of ids){el(id).addEventListener('input',save);el(id).addEventListener('change',save)}el('next').addEventListener('click',()=>view(current+1));el('prev').addEventListener('click',()=>view(current-1));el('generate').addEventListener('click',generate);el('copy').addEventListener('click',copy);el('download').addEventListener('click',download);el('reset').addEventListener('click',()=>{if(!confirm('Да изтрием ли всички въведени отговори на това устройство?'))return;ids.forEach(id=>id==='foundation'?el(id).checked=false:el(id).value='');el('output').value='';el('status').textContent='';save();view(0)});el('editor').addEventListener('submit',e=>e.preventDefault());load();view(0)})();
+</script>
+</body></html>
